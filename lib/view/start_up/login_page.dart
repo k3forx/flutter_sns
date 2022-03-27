@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sns/view/screen.dart';
+import 'package:flutter_sns/view/start_up/create_account_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -20,10 +21,10 @@ class _LoginPageState extends State<LoginPage> {
           child: Container(
         width: double.infinity,
         child: Column(children: [
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
-          Text('Test SNS',
+          const Text('Test SNS',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0),
@@ -53,7 +54,10 @@ class _LoginPageState extends State<LoginPage> {
                 style: TextStyle(color: Colors.blue),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
-                    print('アカウントを作成');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CreateAccountPage()));
                   }),
           ])),
           SizedBox(
