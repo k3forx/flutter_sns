@@ -8,6 +8,8 @@ class PostPage extends StatefulWidget {
 }
 
 class _PostPageState extends State<PostPage> {
+  TextEditingController contentController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,6 +21,20 @@ class _PostPageState extends State<PostPage> {
         backgroundColor: Theme.of(context).canvasColor,
         elevation: 1,
         iconTheme: const IconThemeData(color: Colors.black),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: contentController,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(onPressed: () {}, child: const Text('投稿'))
+          ],
+        ),
       ),
     );
   }
