@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sns/model/account.dart';
 import 'package:flutter_sns/model/post.dart';
-import 'package:flutter_sns/view/time_line/post_page.dart';
 import 'package:intl/intl.dart';
 
 class TimeLinePage extends StatefulWidget {
