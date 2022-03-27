@@ -51,7 +51,7 @@ class _AccountPageState extends State<AccountPage> {
             child: Column(
               children: [
                 Container(
-                  padding: EdgeInsets.only(right: 15, left: 15, top: 20),
+                  padding: const EdgeInsets.only(right: 15, left: 15, top: 20),
                   height: 200,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +66,7 @@ class _AccountPageState extends State<AccountPage> {
                                 foregroundImage:
                                     NetworkImage(myAccount.imagePath),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               Column(
@@ -74,12 +74,13 @@ class _AccountPageState extends State<AccountPage> {
                                 children: [
                                   Text(
                                     myAccount.name,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Text('@${myAccount.userId}',
-                                      style: TextStyle(color: Colors.grey))
+                                      style:
+                                          const TextStyle(color: Colors.grey))
                                 ],
                               )
                             ],
@@ -88,7 +89,7 @@ class _AccountPageState extends State<AccountPage> {
                               onPressed: () {}, child: const Text('編集'))
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       Text(myAccount.selfIntroduction),
@@ -98,7 +99,7 @@ class _AccountPageState extends State<AccountPage> {
                 Container(
                   alignment: Alignment.center,
                   width: double.infinity,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       border: Border(
                           bottom: BorderSide(color: Colors.blue, width: 3))),
                   child: const Text('投稿',
@@ -107,7 +108,7 @@ class _AccountPageState extends State<AccountPage> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: postList.length,
                       itemBuilder: (context, index) {
                         return Container(

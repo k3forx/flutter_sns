@@ -33,8 +33,8 @@ class _ScreenState extends State<Screen> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => PostPage()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const PostPage()));
           },
           child: const Icon(Icons.chat_bubble_outline),
         ));
