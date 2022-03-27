@@ -41,9 +41,9 @@ class _LoginPageState extends State<LoginPage> {
               width: 300,
               child: TextField(
                 controller: passController,
-                decoration: InputDecoration(hintText: "パスワード"),
+                decoration: const InputDecoration(hintText: "パスワード"),
               )),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           RichText(
@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
             TextSpan(text: 'アカウントは作成していない方は'),
             TextSpan(
                 text: 'こちら',
-                style: TextStyle(color: Colors.blue),
+                style: const TextStyle(color: Colors.blue),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
                     Navigator.push(
@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                             builder: (context) => CreateAccountPage()));
                   }),
           ])),
-          SizedBox(
+          const SizedBox(
             height: 70,
           ),
           ElevatedButton(
