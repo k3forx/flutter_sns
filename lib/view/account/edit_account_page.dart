@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_sns/model/account.dart';
 import 'package:flutter_sns/utils/authentication.dart';
+import 'package:flutter_sns/utils/firestore/users.dart';
 import 'package:flutter_sns/utils/function_utils.dart';
 import 'package:flutter_sns/utils/widget_utils.dart';
 import 'package:image_picker/image_picker.dart';
@@ -97,8 +98,29 @@ class _EditAccountPageState extends State<EditAccountPage> {
                   onPressed: () async {
                     if (nameController.text.isNotEmpty &&
                         userIdController.text.isNotEmpty &&
-                        selfIntroductionController.text.isNotEmpty &&
-                        image != null) {}
+                        selfIntroductionController.text.isNotEmpty) {
+                      String imagePath = '';
+                      if (image == null) {
+                        imagePath = myAccount.imagePath;
+                      } else {
+                        var result = await FunctionUtils.uploadImage(
+                            myAccount.userId, image!);
+                        imagePath = result;
+                      }
+                      Account updateAccount = Account(
+                          id: myAccount.id,
+                          name: nameController.text,
+                          userId: nameController.text,
+                          selfIntroduction: selfIntroductionController.text,
+                          imagePath: imagePath);
+                      var result =
+                          await UserFirestore.updateUser(updateAccount);
+                      if (result) {
+                        print('updated successfully');
+                        Authentication.myAccount = updateAccount;
+                        Navigator.pop(context, true);
+                      }
+                    }
                   },
                   child: const Text('更新'))
             ],

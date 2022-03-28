@@ -46,4 +46,19 @@ class UserFirestore {
       return false;
     }
   }
+
+  static Future<dynamic> updateUser(Account updateAccount) async {
+    try {
+      await users.doc(updateAccount.id).update({
+        'name': updateAccount.name,
+        'image_path': updateAccount.imagePath,
+        'user_id': updateAccount.userId,
+        'self_introduction': updateAccount.selfIntroduction,
+        'updated_time': Timestamp.now(),
+      });
+      return true;
+    } on FirebaseException catch (e) {
+      return false;
+    }
+  }
 }

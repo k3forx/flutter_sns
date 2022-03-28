@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sns/model/account.dart';
 import 'package:flutter_sns/model/post.dart';
 import 'package:flutter_sns/utils/authentication.dart';
+import 'package:flutter_sns/utils/firestore/users.dart';
 import 'package:flutter_sns/view/account/edit_account_page.dart';
 import 'package:intl/intl.dart';
 
@@ -79,12 +80,17 @@ class _AccountPageState extends State<AccountPage> {
                             ],
                           ),
                           OutlinedButton(
-                              onPressed: () {
-                                Navigator.push(
+                              onPressed: () async {
+                                var result = await Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             EditAccountPage()));
+                                if (result) {
+                                  setState(() {
+                                    myAccount = Authentication.myAccount!;
+                                  });
+                                }
                               },
                               child: const Text('編集'))
                         ],
