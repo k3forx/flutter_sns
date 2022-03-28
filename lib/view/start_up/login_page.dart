@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
                 width: 300,
                 child: TextField(
                   controller: emailController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: "メールアドレス",
                   ),
                 )),
@@ -50,19 +50,21 @@ class _LoginPageState extends State<LoginPage> {
             height: 10,
           ),
           RichText(
-              text: TextSpan(style: TextStyle(color: Colors.black), children: [
-            TextSpan(text: 'アカウントは作成していない方は'),
-            TextSpan(
-                text: 'こちら',
-                style: const TextStyle(color: Colors.blue),
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CreateAccountPage()));
-                  }),
-          ])),
+              text: TextSpan(
+                  style: const TextStyle(color: Colors.black),
+                  children: [
+                const TextSpan(text: 'アカウントは作成していない方は'),
+                TextSpan(
+                    text: 'こちら',
+                    style: const TextStyle(color: Colors.blue),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CreateAccountPage()));
+                      }),
+              ])),
           const SizedBox(
             height: 70,
           ),

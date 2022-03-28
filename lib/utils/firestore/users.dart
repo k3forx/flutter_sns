@@ -17,7 +17,6 @@ class UserFirestore {
         'created_time': Timestamp.now(),
         'updated_time': Timestamp.now(),
       });
-      print('new account is created');
       return true;
     } on FirebaseException catch (e) {
       print('new account is failed to be created: ${e}');

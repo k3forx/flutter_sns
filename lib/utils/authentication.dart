@@ -11,7 +11,6 @@ class Authentication {
     try {
       UserCredential newAccount = await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
-      print('signUp is completed!');
       return newAccount;
     } on FirebaseAuthException catch (e) {
       return false;
@@ -24,7 +23,6 @@ class Authentication {
       final UserCredential _result = await _firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
       currentFirebaseUser = _result.user;
-      print('signIn is completed');
       return _result;
     } on FirebaseAuthException catch (e) {
       print(e);

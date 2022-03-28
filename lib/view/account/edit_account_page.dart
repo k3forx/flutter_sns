@@ -24,6 +24,14 @@ class _EditAccountPageState extends State<EditAccountPage> {
   File? image;
   ImagePicker picker = ImagePicker();
 
+  ImageProvider getImage() {
+    if (image == null) {
+      return NetworkImage(myAccount.imagePath);
+    } else {
+      return FileImage(image!);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -53,7 +61,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                   }
                 },
                 child: CircleAvatar(
-                  foregroundImage: image == null ? null : FileImage(image!),
+                  foregroundImage: getImage(),
                   radius: 40,
                   child: const Icon(Icons.add),
                 ),

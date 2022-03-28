@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_sns/view/account/time_line/time_line_page.dart';
 
 class Account {
   String id;
