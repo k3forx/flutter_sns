@@ -1,11 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_sns/view/account/time_line/time_line_page.dart';
+
 class Account {
   String id;
   String name;
   String imagePath;
   String selfIntroduction;
   String userId;
-  DateTime? createdTime;
-  DateTime? updatedTime;
+  Timestamp? createdTime;
+  Timestamp? updatedTime;
 
   Account(
       {this.id = '',
