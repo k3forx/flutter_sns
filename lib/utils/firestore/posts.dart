@@ -27,4 +27,23 @@ class PostFirestore {
       return false;
     }
   }
+
+  static Future<List<Post>?> getPostsByIds(List<String> ids) async {
+    List<Post> postList = [];
+    try {
+      await Future.forEach(ids, (String id) async {
+        var doc = await posts.doc(id).get();
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        Post post = Post(
+          id: doc.id,
+          content: data['content'],
+          postAccountId: data['post_account_id'],
+          createdTime: data['created_time'],
+        );
+      });
+      return postList;
+    } on FirebaseException catch (e) {
+      return null;
+    }
+  }
 }
