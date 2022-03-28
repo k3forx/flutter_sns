@@ -1,8 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sns/model/account.dart';
 import 'package:flutter_sns/model/post.dart';
 import 'package:flutter_sns/utils/authentication.dart';
-import 'package:flutter_sns/utils/firestore/users.dart';
 import 'package:flutter_sns/view/account/edit_account_page.dart';
 import 'package:intl/intl.dart';
 
@@ -19,19 +19,19 @@ class _AccountPageState extends State<AccountPage> {
       id: '1',
       content: 'hello too',
       postAccountId: '1',
-      createdTime: DateTime.now(),
+      createdTime: Timestamp.now(),
     ),
     Post(
       id: '2',
       content: 'hello too 2',
       postAccountId: '1',
-      createdTime: DateTime.now(),
+      createdTime: Timestamp.now(),
     ),
     Post(
       id: '3',
       content: 'hello too 3',
       postAccountId: '1',
-      createdTime: DateTime.now(),
+      createdTime: Timestamp.now(),
     ),
   ];
 
@@ -160,7 +160,9 @@ class _AccountPageState extends State<AccountPage> {
                                           ],
                                         ),
                                         Text(DateFormat('M/d/yy').format(
-                                            postList[index].createdTime!))
+                                            postList[index]
+                                                .createdTime!
+                                                .toDate()))
                                       ],
                                     ),
                                     Text(postList[index].content),
