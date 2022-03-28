@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sns/model/account.dart';
 import 'package:flutter_sns/model/post.dart';
 import 'package:flutter_sns/utils/authentication.dart';
+import 'package:flutter_sns/view/account/edit_account_page.dart';
 import 'package:intl/intl.dart';
 
 class AccountPage extends StatefulWidget {
@@ -79,7 +80,14 @@ class _AccountPageState extends State<AccountPage> {
                             ],
                           ),
                           OutlinedButton(
-                              onPressed: () {}, child: const Text('編集'))
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditAccountPage()));
+                              },
+                              child: const Text('編集'))
                         ],
                       ),
                       const SizedBox(
