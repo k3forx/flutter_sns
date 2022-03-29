@@ -61,4 +61,28 @@ class UserFirestore {
       return false;
     }
   }
+
+  static Future<Map<String, Account>?> getPostUserMap(
+      List<String> accountIds) async {
+    Map<String, Account> map = {};
+    try {
+      await Future.forEach(accountIds, (String accountId) async {
+        var doc = await users.doc(accountId).get();
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        Account postAccount = Account(
+          id: accountId,
+          name: data['name'],
+          userId: data['user_id'],
+          imagePath: data['image_path'],
+          selfIntroduction: data['self_introduction'],
+          createdTime: data['created_time'],
+          updatedTime: data['updated_time'],
+        );
+        map[accountId] = postAccount;
+      });
+      return map;
+    } on FirebaseException catch (e) {
+      return null;
+    }
+  }
 }
