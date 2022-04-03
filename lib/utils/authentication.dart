@@ -29,4 +29,8 @@ class Authentication {
       return false;
     }
   }
+
+  static Future<dynamic> signOut() async {
+    await _firebaseAuth.signOut();
+  }
 }

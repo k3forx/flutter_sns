@@ -6,6 +6,7 @@ import 'package:flutter_sns/utils/authentication.dart';
 import 'package:flutter_sns/utils/firestore/users.dart';
 import 'package:flutter_sns/utils/function_utils.dart';
 import 'package:flutter_sns/utils/widget_utils.dart';
+import 'package:flutter_sns/view/start_up/login_page.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditAccountPage extends StatefulWidget {
@@ -71,7 +72,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                 width: 300,
                 child: TextField(
                   controller: nameController,
-                  decoration: InputDecoration(hintText: '名前'),
+                  decoration: const InputDecoration(hintText: '名前'),
                 ),
               ),
               Padding(
@@ -80,7 +81,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                   width: 300,
                   child: TextField(
                     controller: userIdController,
-                    decoration: InputDecoration(hintText: 'ユーザーID'),
+                    decoration: const InputDecoration(hintText: 'ユーザーID'),
                   ),
                 ),
               ),
@@ -88,7 +89,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                 width: 300,
                 child: TextField(
                   controller: selfIntroductionController,
-                  decoration: InputDecoration(hintText: '自己紹介'),
+                  decoration: const InputDecoration(hintText: '自己紹介'),
                 ),
               ),
               const SizedBox(
@@ -116,13 +117,27 @@ class _EditAccountPageState extends State<EditAccountPage> {
                       var result =
                           await UserFirestore.updateUser(updateAccount);
                       if (result) {
-                        print('updated successfully');
                         Authentication.myAccount = updateAccount;
                         Navigator.pop(context, true);
                       }
                     }
                   },
-                  child: const Text('更新'))
+                  child: const Text('更新')),
+              const SizedBox(
+                height: 50,
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    Authentication.signOut();
+                    while (Navigator.canPop(context)) {
+                      Navigator.pop(context);
+                    }
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage()));
+                  },
+                  child: const Text("ログアウト")),
             ],
           ),
         ),
