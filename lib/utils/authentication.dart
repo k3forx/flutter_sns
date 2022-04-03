@@ -33,4 +33,8 @@ class Authentication {
   static Future<dynamic> signOut() async {
     await _firebaseAuth.signOut();
   }
+
+  static Future<dynamic> deleteAuth() async {
+    currentFirebaseUser!.delete();
+  }
 }
