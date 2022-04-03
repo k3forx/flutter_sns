@@ -25,7 +25,6 @@ class Authentication {
       currentFirebaseUser = _result.user;
       return _result;
     } on FirebaseAuthException catch (e) {
-      print(e);
       return false;
     }
   }

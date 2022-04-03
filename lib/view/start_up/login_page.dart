@@ -73,10 +73,14 @@ class _LoginPageState extends State<LoginPage> {
                 var result = await Authentication.emailSignIn(
                     email: emailController.text, password: passController.text);
                 if (result is UserCredential) {
-                  var _result = await UserFirestore.getUser(result.user!.uid);
-                  if (_result) {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => Screen()));
+                  if (result.user!.emailVerified) {
+                    var _result = await UserFirestore.getUser(result.user!.uid);
+                    if (_result) {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => Screen()));
+                    }
+                  } else {
+                    print("finish email verification");
                   }
                 }
               },

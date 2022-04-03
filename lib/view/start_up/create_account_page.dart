@@ -8,6 +8,7 @@ import 'package:flutter_sns/utils/authentication.dart';
 import 'package:flutter_sns/utils/firestore/users.dart';
 import 'package:flutter_sns/utils/function_utils.dart';
 import 'package:flutter_sns/utils/widget_utils.dart';
+import 'package:flutter_sns/view/start_up/check_email_page.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CreateAccountPage extends StatefulWidget {
@@ -36,7 +37,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
           width: double.infinity,
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               GestureDetector(
@@ -51,14 +52,14 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 child: CircleAvatar(
                   foregroundImage: image == null ? null : FileImage(image!),
                   radius: 40,
-                  child: Icon(Icons.add),
+                  child: const Icon(Icons.add),
                 ),
               ),
               Container(
                 width: 300,
                 child: TextField(
                   controller: nameController,
-                  decoration: InputDecoration(hintText: '名前'),
+                  decoration: const InputDecoration(hintText: '名前'),
                 ),
               ),
               Padding(
@@ -67,7 +68,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   width: 300,
                   child: TextField(
                     controller: userIdController,
-                    decoration: InputDecoration(hintText: 'ユーザーID'),
+                    decoration: const InputDecoration(hintText: 'ユーザーID'),
                   ),
                 ),
               ),
@@ -75,7 +76,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 width: 300,
                 child: TextField(
                   controller: selfIntroductionController,
-                  decoration: InputDecoration(hintText: '自己紹介'),
+                  decoration: const InputDecoration(hintText: '自己紹介'),
                 ),
               ),
               Padding(
@@ -84,7 +85,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   width: 300,
                   child: TextField(
                     controller: emailController,
-                    decoration: InputDecoration(hintText: 'メールアドレス'),
+                    decoration: const InputDecoration(hintText: 'メールアドレス'),
                   ),
                 ),
               ),
@@ -92,7 +93,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 width: 300,
                 child: TextField(
                   controller: passController,
-                  decoration: InputDecoration(hintText: 'パスワード'),
+                  decoration: const InputDecoration(hintText: 'パスワード'),
                 ),
               ),
               const SizedBox(
@@ -121,7 +122,13 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                         );
                         var _result = await UserFirestore.setUser(newAccount);
                         if (_result) {
-                          Navigator.pop(context);
+                          result.user!.sendEmailVerification();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CheckEmailPage(
+                                      email: emailController.text,
+                                      pass: passController.text)));
                         }
                       }
                     }
