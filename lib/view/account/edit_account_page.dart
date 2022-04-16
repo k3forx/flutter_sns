@@ -26,21 +26,11 @@ class _EditAccountPageState extends State<EditAccountPage> {
   File? image;
   ImagePicker picker = ImagePicker();
 
-  ImageProvider getImage() {
-    if (image == null) {
-      return NetworkImage(myAccount.imagePath);
-    } else {
-      return FileImage(image!);
-    }
-  }
-
   @override
   void initState() {
     super.initState();
     nameController = TextEditingController(text: myAccount.name);
     userIdController = TextEditingController(text: myAccount.userId);
-    selfIntroductionController =
-        TextEditingController(text: myAccount.selfIntroduction);
   }
 
   @override
@@ -62,11 +52,6 @@ class _EditAccountPageState extends State<EditAccountPage> {
                     setState(() {});
                   }
                 },
-                child: CircleAvatar(
-                  foregroundImage: getImage(),
-                  radius: 40,
-                  child: const Icon(Icons.add),
-                ),
               ),
               Container(
                 width: 300,
@@ -100,20 +85,11 @@ class _EditAccountPageState extends State<EditAccountPage> {
                     if (nameController.text.isNotEmpty &&
                         userIdController.text.isNotEmpty &&
                         selfIntroductionController.text.isNotEmpty) {
-                      String imagePath = '';
-                      if (image == null) {
-                        imagePath = myAccount.imagePath;
-                      } else {
-                        var result = await FunctionUtils.uploadImage(
-                            myAccount.userId, image!);
-                        imagePath = result;
-                      }
                       Account updateAccount = Account(
-                          id: myAccount.id,
-                          name: nameController.text,
-                          userId: nameController.text,
-                          selfIntroduction: selfIntroductionController.text,
-                          imagePath: imagePath);
+                        id: myAccount.id,
+                        name: nameController.text,
+                        userId: nameController.text,
+                      );
                       var result =
                           await UserFirestore.updateUser(updateAccount);
                       if (result) {

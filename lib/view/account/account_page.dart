@@ -36,11 +36,6 @@ class _AccountPageState extends State<AccountPage> {
                         children: [
                           Row(
                             children: [
-                              CircleAvatar(
-                                radius: 32,
-                                foregroundImage:
-                                    NetworkImage(myAccount.imagePath),
-                              ),
                               const SizedBox(
                                 width: 10,
                               ),
@@ -79,7 +74,6 @@ class _AccountPageState extends State<AccountPage> {
                       const SizedBox(
                         height: 15,
                       ),
-                      Text(myAccount.selfIntroduction),
                     ],
                   ),
                 ),
@@ -135,11 +129,6 @@ class _AccountPageState extends State<AccountPage> {
                                               horizontal: 10, vertical: 15),
                                           child: Row(
                                             children: [
-                                              CircleAvatar(
-                                                radius: 22,
-                                                foregroundImage: NetworkImage(
-                                                    myAccount.imagePath),
-                                              ),
                                               Expanded(
                                                 child: Container(
                                                     child: Column(

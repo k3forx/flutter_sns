@@ -27,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
           const SizedBox(
             height: 50,
           ),
-          const Text('Test SNS',
+          const Text('Coffee Memo',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0),
@@ -84,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                   }
                 }
               },
-              child: const Text('emailでログイン'))
+              child: const Text('ログイン'))
         ]),
       )),
     );

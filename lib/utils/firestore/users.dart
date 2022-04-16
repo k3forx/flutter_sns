@@ -13,8 +13,6 @@ class UserFirestore {
       await users.doc(newAccount.id).set({
         'name': newAccount.name,
         'user_id': newAccount.userId,
-        'self_introduction': newAccount.selfIntroduction,
-        'image_path': newAccount.imagePath,
         'created_time': Timestamp.now(),
         'updated_time': Timestamp.now(),
       });
@@ -34,8 +32,6 @@ class UserFirestore {
         id: uid,
         name: data['name'],
         userId: data['user_id'],
-        selfIntroduction: data['self_introduction'],
-        imagePath: data['image_path'],
         createdTime: data['created_time'],
         updatedTime: data['updated_time'],
       );
@@ -52,9 +48,7 @@ class UserFirestore {
     try {
       await users.doc(updateAccount.id).update({
         'name': updateAccount.name,
-        'image_path': updateAccount.imagePath,
         'user_id': updateAccount.userId,
-        'self_introduction': updateAccount.selfIntroduction,
         'updated_time': Timestamp.now(),
       });
       return true;
@@ -74,8 +68,6 @@ class UserFirestore {
           id: accountId,
           name: data['name'],
           userId: data['user_id'],
-          imagePath: data['image_path'],
-          selfIntroduction: data['self_introduction'],
           createdTime: data['created_time'],
           updatedTime: data['updated_time'],
         );

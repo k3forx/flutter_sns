@@ -71,11 +71,6 @@ class _TimeLinePageState extends State<TimeLinePage> {
                                   horizontal: 10, vertical: 15),
                               child: Row(
                                 children: [
-                                  CircleAvatar(
-                                    radius: 22,
-                                    foregroundImage:
-                                        NetworkImage(postAccount.imagePath),
-                                  ),
                                   Expanded(
                                     child: Container(
                                         child: Column(
