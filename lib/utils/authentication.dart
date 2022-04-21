@@ -47,18 +47,13 @@ class Authentication {
           options: Options(
             contentType: Headers.jsonContentType,
           ));
-      print("response");
-      print(response);
-      cookies = [...cookies, Cookie('session', response.data['access'])];
+      cookies = [...cookies, Cookie('session', response.data['session'])];
       cookieJar.saveFromResponse(_uriHost, cookies);
 
       List<Cookie> cookieList =
           await cookieJar.loadForRequest(_uriHost); // 格納されたクッキーを確認しているだけの処理
-      print(cookieList);
 
-      UserCredential newAccount = await _firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password);
-      return newAccount;
+      return cookieList.isNotEmpty;
     } catch (e) {
       print(e);
       return false;

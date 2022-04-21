@@ -7,6 +7,7 @@ import 'package:flutter_sns/utils/authentication.dart';
 import 'package:flutter_sns/utils/firestore/users.dart';
 import 'package:flutter_sns/utils/widget_utils.dart';
 import 'package:flutter_sns/view/start_up/check_email_page.dart';
+import 'package:flutter_sns/view/start_up/login_page.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CreateAccountPage extends StatefulWidget {
@@ -69,25 +70,15 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     if (userNameController.text.isNotEmpty &&
                         emailController.text.isNotEmpty &&
                         passController.text.isNotEmpty) {
-                      var result = await authentication.signUp(
+                      var isSignUp = await authentication.signUp(
                           userName: userNameController.text,
                           email: emailController.text,
                           password: passController.text);
-                      if (result is UserCredential) {
-                        Account newAccount = Account(
-                          id: result.user!.uid,
-                          name: userNameController.text,
-                        );
-                        var _result = await UserFirestore.setUser(newAccount);
-                        if (_result) {
-                          result.user!.sendEmailVerification();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CheckEmailPage(
-                                      email: emailController.text,
-                                      pass: passController.text)));
-                        }
+                      if (isSignUp) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()));
                       }
                     }
                   },
