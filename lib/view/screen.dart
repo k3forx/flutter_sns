@@ -12,7 +12,12 @@ class Screen extends StatefulWidget {
 
 class _ScreenState extends State<Screen> {
   int selectedIndex = 0;
-  List<Widget> pageList = [TimeLinePage(), AccountPage()];
+  List<Widget> pageList = [
+    TimeLinePage(),
+    AccountPage(),
+    TimeLinePage(),
+    AccountPage()
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +25,9 @@ class _ScreenState extends State<Screen> {
         body: pageList[selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: ''),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.perm_identity_outlined), label: '')
+            BottomNavigationBarItem(icon: Icon(Icons.coffee), label: ''),
+            BottomNavigationBarItem(icon: Icon(Icons.store_sharp), label: ''),
+            BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: '')
           ],
           currentIndex: selectedIndex,
           onTap: (index) {

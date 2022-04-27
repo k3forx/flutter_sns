@@ -16,6 +16,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
+  Authentication authentication = Authentication();
 
   @override
   Widget build(BuildContext context) {
@@ -70,18 +71,11 @@ class _LoginPageState extends State<LoginPage> {
           ),
           ElevatedButton(
               onPressed: () async {
-                var result = await Authentication.emailSignIn(
+                var isLoggedIn = await authentication.emailSignIn(
                     email: emailController.text, password: passController.text);
-                if (result is UserCredential) {
-                  if (result.user!.emailVerified) {
-                    var _result = await UserFirestore.getUser(result.user!.uid);
-                    if (_result) {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => Screen()));
-                    }
-                  } else {
-                    print("finish email verification");
-                  }
+                if (isLoggedIn) {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => Screen()));
                 }
               },
               child: const Text('ログイン'))

@@ -47,27 +47,47 @@ class Authentication {
           options: Options(
             contentType: Headers.jsonContentType,
           ));
-      cookies = [...cookies, Cookie('session', response.data['session'])];
-      cookieJar.saveFromResponse(_uriHost, cookies);
 
-      List<Cookie> cookieList =
-          await cookieJar.loadForRequest(_uriHost); // 格納されたクッキーを確認しているだけの処理
-
-      return cookieList.isNotEmpty;
+      return response.data["status"] == "success";
     } catch (e) {
       print(e);
       return false;
     }
   }
 
-  static Future<dynamic> emailSignIn(
+  Future<dynamic> emailSignIn(
       {required String email, required String password}) async {
     try {
-      final UserCredential _result = await _firebaseAuth
-          .signInWithEmailAndPassword(email: email, password: password);
-      currentFirebaseUser = _result.user;
-      return _result;
-    } on FirebaseAuthException catch (e) {
+      print("emailSignIn");
+      Directory appDocDir = await getApplicationDocumentsDirectory();
+      String appDocPath = appDocDir.path;
+      PersistCookieJar cookieJar =
+          PersistCookieJar(storage: FileStorage(appDocPath + "/.cookies/"));
+
+      cookieJar.saveFromResponse(_uriHost, cookies);
+      dio.interceptors.add(CookieManager(cookieJar));
+
+      final response = await dio.post("/v1/auth/login",
+          data: {
+            'email': email,
+            'password': password,
+          },
+          options: Options(
+            contentType: Headers.jsonContentType,
+          ));
+
+      cookies = [...cookies, Cookie('session', response.data['session'])];
+      cookieJar.saveFromResponse(_uriHost, cookies);
+
+      print("response");
+      print(response);
+
+      List<Cookie> cookieList =
+          await cookieJar.loadForRequest(_uriHost); // 格納されたクッキーを確認しているだけの処理
+
+      return cookieList.isNotEmpty;
+    } on Exception catch (e) {
+      print(e);
       return false;
     }
   }

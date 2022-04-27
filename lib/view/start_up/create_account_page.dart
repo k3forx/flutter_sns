@@ -1,12 +1,8 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sns/model/account.dart';
 import 'package:flutter_sns/utils/authentication.dart';
-import 'package:flutter_sns/utils/firestore/users.dart';
 import 'package:flutter_sns/utils/widget_utils.dart';
-import 'package:flutter_sns/view/start_up/check_email_page.dart';
 import 'package:flutter_sns/view/start_up/login_page.dart';
 import 'package:image_picker/image_picker.dart';
 
