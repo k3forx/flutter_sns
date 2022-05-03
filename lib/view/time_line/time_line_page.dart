@@ -12,11 +12,13 @@ class TimeLinePage extends StatefulWidget {
 }
 
 class _TimeLinePageState extends State<TimeLinePage> {
+  PostFirestore postFirestore = PostFirestore();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('タイムライン',
+        title: const Text('Coffee Memo',
             style: TextStyle(
               color: Colors.black,
             )),

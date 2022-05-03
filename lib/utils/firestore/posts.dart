@@ -1,28 +1,52 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cookie_jar/cookie_jar.dart';
+import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter_sns/model/post.dart';
+import 'package:path_provider/path_provider.dart';
+
+final Uri _uriHost = Uri.parse('http://localhost:8000');
 
 class PostFirestore {
   static final _firestoreInstance = FirebaseFirestore.instance;
   static final CollectionReference posts =
       _firestoreInstance.collection('posts');
+  static Dio dio = Dio();
+  static List<Cookie> cookies = [];
 
-  static Future<dynamic> addPost(Post newPost) async {
+  PostFirestore() {
+    dio.options.baseUrl = _uriHost.toString();
+    dio.options.connectTimeout = 5000;
+    dio.options.receiveTimeout = 3000;
+    dio.options.contentType = 'application/json';
+  }
+
+  Future<dynamic> addPost(String name, String farmName, String country,
+      String roastDegree, String roastedAt) async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
+    PersistCookieJar cookieJar =
+        PersistCookieJar(storage: FileStorage(appDocPath + "/.cookies/"));
+
+    cookieJar.saveFromResponse(_uriHost, cookies);
+    dio.interceptors.add(CookieManager(cookieJar));
+
     try {
-      final CollectionReference _userPosts = _firestoreInstance
-          .collection('users')
-          .doc(newPost.postAccountId)
-          .collection('my_posts');
-      var result = await posts.add({
-        'content': newPost.content,
-        'post_account_id': newPost.postAccountId,
-        'created_time': Timestamp.now(),
-      });
-      _userPosts.doc(result.id).set({
-        'post_id': result.id,
-        'created_time': Timestamp.now(),
-      });
+      final response = await dio.post('/v1/coffee-beans',
+          data: {
+            'name': name,
+            'farmName': farmName,
+            'country': country,
+            'roastDegree': roastDegree,
+            'roastedAt': roastedAt,
+          },
+          options: Options(contentType: Headers.jsonContentType));
+      print(response);
       return true;
-    } on FirebaseException catch (e) {
+    } catch (e) {
+      print(e);
       return false;
     }
   }
