@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:flutter_sns/model/coffee_bean.dart';
 import 'package:flutter_sns/model/post.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -48,6 +49,34 @@ class PostFirestore {
     } catch (e) {
       print(e);
       return false;
+    }
+  }
+
+  Future<List<CoffeeBean>> getAll() async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
+    PersistCookieJar cookieJar =
+        PersistCookieJar(storage: FileStorage(appDocPath + "/.cookies/"));
+
+    cookieJar.saveFromResponse(_uriHost, cookies);
+    dio.interceptors.add(CookieManager(cookieJar));
+
+    try {
+      final response = await dio.get('/v1/coffee-beans',
+          options: Options(contentType: Headers.jsonContentType));
+      print(response.data["coffeeBeans"]);
+      List<CoffeeBean> coffeeBeans = (response.data["coffeeBeans"] as List)
+          .map(
+            (e) => CoffeeBean(
+              id: e["id"],
+              name: e["name"],
+            ),
+          )
+          .toList();
+      return coffeeBeans;
+    } on Exception catch (e) {
+      print(e);
+      return <CoffeeBean>[];
     }
   }
 

@@ -131,18 +131,4 @@ class _PostPageState extends State<PostPage> {
       ),
     );
   }
-
-  _selectDate(BuildContext context) async {
-    final newSelectedDate = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate ?? DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2040),
-    );
-
-    if (newSelectedDate != null) {
-      _selectedDate = newSelectedDate;
-      roastedAtController.text = _selectedDate.toString();
-    }
-  }
 }
