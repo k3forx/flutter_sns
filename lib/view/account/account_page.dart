@@ -103,78 +103,76 @@ class _AccountPageState extends State<AccountPage> {
                             return snapshot.data!.docs[index].id;
                           });
                           return FutureBuilder<List<Post>?>(
-                              future: PostFirestore.getPostsByIds(myPostIds),
                               builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return ListView.builder(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemCount: snapshot.data!.length,
-                                      itemBuilder: (context, index) {
-                                        Post post = snapshot.data![index];
-                                        return Container(
-                                          decoration: BoxDecoration(
-                                              border: index == 0
-                                                  ? const Border(
-                                                      top: BorderSide(
-                                                        color: Colors.grey,
-                                                        width: 0,
-                                                      ),
-                                                      bottom: BorderSide(
-                                                          color: Colors.grey,
-                                                          width: 0))
-                                                  : const Border(
-                                                      bottom: BorderSide(
-                                                          color: Colors.grey,
-                                                          width: 0))),
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10, vertical: 15),
-                                          child: Row(
-                                            children: [
-                                              Expanded(
-                                                child: Container(
-                                                    child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
+                            if (snapshot.hasData) {
+                              return ListView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: snapshot.data!.length,
+                                  itemBuilder: (context, index) {
+                                    Post post = snapshot.data![index];
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                          border: index == 0
+                                              ? const Border(
+                                                  top: BorderSide(
+                                                    color: Colors.grey,
+                                                    width: 0,
+                                                  ),
+                                                  bottom: BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 0))
+                                              : const Border(
+                                                  bottom: BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 0))),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 15),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: Container(
+                                                child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
                                                     Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
                                                       children: [
-                                                        Row(
-                                                          children: [
-                                                            Text(myAccount.name,
-                                                                style: const TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold)),
-                                                            Text(
-                                                                '@${myAccount.userId}',
-                                                                style: const TextStyle(
+                                                        Text(myAccount.name,
+                                                            style: const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
+                                                        Text(
+                                                            '@${myAccount.userId}',
+                                                            style:
+                                                                const TextStyle(
                                                                     color: Colors
                                                                         .green)),
-                                                          ],
-                                                        ),
-                                                        Text(DateFormat(
-                                                                'M/d/yy')
-                                                            .format(post
-                                                                .createdTime!
-                                                                .toDate()))
                                                       ],
                                                     ),
-                                                    Text(post.content),
+                                                    Text(DateFormat('M/d/yy')
+                                                        .format(post
+                                                            .createdTime!
+                                                            .toDate()))
                                                   ],
-                                                )),
-                                              )
-                                            ],
-                                          ),
-                                        );
-                                      });
-                                } else {
-                                  return Container();
-                                }
-                              });
+                                                ),
+                                                Text(post.content),
+                                              ],
+                                            )),
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                  });
+                            } else {
+                              return Container();
+                            }
+                          });
                         } else {
                           return Container();
                         }

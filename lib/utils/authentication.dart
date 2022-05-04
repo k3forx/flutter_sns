@@ -58,7 +58,6 @@ class Authentication {
   Future<dynamic> emailSignIn(
       {required String email, required String password}) async {
     try {
-      print("emailSignIn");
       Directory appDocDir = await getApplicationDocumentsDirectory();
       String appDocPath = appDocDir.path;
       PersistCookieJar cookieJar =
@@ -67,20 +66,19 @@ class Authentication {
       cookieJar.saveFromResponse(_uriHost, cookies);
       dio.interceptors.add(CookieManager(cookieJar));
 
-      final response = await dio.post("/v1/auth/login",
-          data: {
-            'email': email,
-            'password': password,
-          },
-          options: Options(
-            contentType: Headers.jsonContentType,
-          ));
+      final response = await dio.post(
+        "/v1/auth/login",
+        data: {
+          'email': email,
+          'password': password,
+        },
+        options: Options(
+          contentType: Headers.jsonContentType,
+        ),
+      );
 
       cookies = [...cookies, Cookie('session', response.data['session'])];
       cookieJar.saveFromResponse(_uriHost, cookies);
-
-      print("response");
-      print(response);
 
       List<Cookie> cookieList =
           await cookieJar.loadForRequest(_uriHost); // 格納されたクッキーを確認しているだけの処理

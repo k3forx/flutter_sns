@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_sns/model/account.dart';
 import 'package:flutter_sns/utils/authentication.dart';
-import 'package:flutter_sns/utils/firestore/posts.dart';
 
 class UserFirestore {
   static final _firestoreInstance = FirebaseFirestore.instance;
@@ -10,14 +9,16 @@ class UserFirestore {
 
   static Future<dynamic> setUser(Account newAccount) async {
     try {
-      await users.doc(newAccount.id).set({
-        'name': newAccount.name,
-        'user_id': newAccount.userId,
-        'created_time': Timestamp.now(),
-        'updated_time': Timestamp.now(),
-      });
+      await users.doc(newAccount.id).set(
+        {
+          'name': newAccount.name,
+          'user_id': newAccount.userId,
+          'created_time': Timestamp.now(),
+          'updated_time': Timestamp.now(),
+        },
+      );
       return true;
-    } on FirebaseException catch (e) {
+    } on Exception catch (e) {
       print('new account is failed to be created: ${e}');
       return false;
     }
@@ -36,10 +37,8 @@ class UserFirestore {
         updatedTime: data['updated_time'],
       );
       Authentication.myAccount = myAccount;
-      print('success to get user');
       return true;
     } on FirebaseException catch (e) {
-      print('failed to get use: ${e}');
       return false;
     }
   }
@@ -77,10 +76,5 @@ class UserFirestore {
     } on FirebaseException catch (e) {
       return null;
     }
-  }
-
-  static Future<dynamic> deleteUser(String accountId) async {
-    await users.doc(accountId).delete();
-    PostFirestore.deletePosts(accountId);
   }
 }

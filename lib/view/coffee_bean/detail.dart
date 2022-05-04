@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sns/model/coffee_bean.dart';
 import 'package:flutter_sns/utils/firestore/posts.dart';
+import 'package:intl/intl.dart';
 
 class CoffeeBeanDetailPage extends StatefulWidget {
   final int coffeeBeanId;
@@ -47,6 +48,12 @@ class _CoffeeBeanDetailPage extends State<CoffeeBeanDetailPage> {
                 TextEditingController(text: coffeeBean.name);
             TextEditingController farmNameController =
                 TextEditingController(text: coffeeBean.farmName);
+            TextEditingController countryController =
+                TextEditingController(text: coffeeBean.country);
+            TextEditingController roastDegreeController =
+                TextEditingController(text: coffeeBean.roastDegree);
+            TextEditingController roastedAtController = TextEditingController(
+                text: DateFormat("yyyy-MM-dd").format(coffeeBean.roastedAt!));
 
             return Column(
               children: [
@@ -63,6 +70,18 @@ class _CoffeeBeanDetailPage extends State<CoffeeBeanDetailPage> {
                               height: 30,
                             ),
                             Text('農園名'),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Text("原産国"),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Text("焙煎度"),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Text("焙煎日"),
                           ],
                         ),
                       ),
@@ -76,6 +95,15 @@ class _CoffeeBeanDetailPage extends State<CoffeeBeanDetailPage> {
                           TextField(
                             controller: farmNameController,
                           ),
+                          TextField(
+                            controller: countryController,
+                          ),
+                          TextField(
+                            controller: roastDegreeController,
+                          ),
+                          TextField(
+                            controller: roastedAtController,
+                          )
                         ],
                       ),
                     ),
@@ -88,9 +116,13 @@ class _CoffeeBeanDetailPage extends State<CoffeeBeanDetailPage> {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () => {
-                          coffeeBean.name = nameController.text,
-                          coffeeBean.farmName = farmNameController.text,
+                        onPressed: () async {
+                          coffeeBean.name = nameController.text;
+                          coffeeBean.farmName = farmNameController.text;
+                          var result = await postFirestore.update(coffeeBean);
+                          if (result) {
+                            Navigator.pop(context);
+                          }
                         },
                         child: const Text('編集する'),
                       ),
