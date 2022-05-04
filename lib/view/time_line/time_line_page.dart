@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sns/model/coffee_bean.dart';
 import 'package:flutter_sns/utils/firestore/posts.dart';
+import 'package:flutter_sns/view/coffee_bean/detail.dart';
 
 class TimeLinePage extends StatefulWidget {
   const TimeLinePage({Key? key}) : super(key: key);
@@ -38,7 +39,16 @@ class _TimeLinePageState extends State<TimeLinePage> {
             itemBuilder: (context, index) {
               final CoffeeBean coffeeBean = snapShot.data![index];
               return GestureDetector(
-                onTap: () => {print(coffeeBean.id)},
+                onTap: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CoffeeBeanDetailPage(
+                        coffeeBeanId: coffeeBean.id,
+                      ),
+                    ),
+                  )
+                },
                 child: SizedBox(
                   height: 50,
                   child: Center(child: Text('Entry ${coffeeBean.name}')),

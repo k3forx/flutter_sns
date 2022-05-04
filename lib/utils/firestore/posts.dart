@@ -44,7 +44,6 @@ class PostFirestore {
             'roastedAt': roastedAt,
           },
           options: Options(contentType: Headers.jsonContentType));
-      print(response);
       return true;
     } catch (e) {
       print(e);
@@ -64,7 +63,6 @@ class PostFirestore {
     try {
       final response = await dio.get('/v1/coffee-beans',
           options: Options(contentType: Headers.jsonContentType));
-      print(response.data["coffeeBeans"]);
       List<CoffeeBean> coffeeBeans = (response.data["coffeeBeans"] as List)
           .map(
             (e) => CoffeeBean(
@@ -77,6 +75,29 @@ class PostFirestore {
     } on Exception catch (e) {
       print(e);
       return <CoffeeBean>[];
+    }
+  }
+
+  Future<CoffeeBean> getById(int id) async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
+    PersistCookieJar cookieJar =
+        PersistCookieJar(storage: FileStorage(appDocPath + "/.cookies/"));
+
+    cookieJar.saveFromResponse(_uriHost, cookies);
+    dio.interceptors.add(CookieManager(cookieJar));
+
+    try {
+      final response = await dio.get('/v1/coffee-beans/$id',
+          options: Options(contentType: Headers.jsonContentType));
+      return CoffeeBean(
+        id: response.data["id"],
+        name: response.data["name"],
+        farmName: response.data["farmName"],
+      );
+    } on Exception catch (e) {
+      print(e);
+      return CoffeeBean();
     }
   }
 

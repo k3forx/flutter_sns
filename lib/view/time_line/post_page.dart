@@ -111,21 +111,22 @@ class _PostPageState extends State<PostPage> {
               height: 20,
             ),
             ElevatedButton(
-                onPressed: () async {
-                  if (nameController.text.isNotEmpty) {
-                    var result = await postFirestore.addPost(
-                      nameController.text,
-                      farmNameController.text,
-                      countryController.text,
-                      selectedRoastDegree!,
-                      roastedAtController.text,
-                    );
-                    if (result) {
-                      Navigator.pop(context);
-                    }
+              onPressed: () async {
+                if (nameController.text.isNotEmpty) {
+                  var result = await postFirestore.addPost(
+                    nameController.text,
+                    farmNameController.text,
+                    countryController.text,
+                    selectedRoastDegree!,
+                    roastedAtController.text,
+                  );
+                  if (result) {
+                    Navigator.pop(context);
                   }
-                },
-                child: const Text('登録'))
+                }
+              },
+              child: const Text('登録'),
+            ),
           ],
         ),
       ),

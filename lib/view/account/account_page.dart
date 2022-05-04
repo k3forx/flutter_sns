@@ -9,6 +9,8 @@ import 'package:flutter_sns/view/account/edit_account_page.dart';
 import 'package:intl/intl.dart';
 
 class AccountPage extends StatefulWidget {
+  const AccountPage({Key? key}) : super(key: key);
+
   @override
   _AccountPageState createState() => _AccountPageState();
 }
@@ -21,7 +23,7 @@ class _AccountPageState extends State<AccountPage> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             height: MediaQuery.of(context).size.height,
             child: Column(
               children: [
@@ -61,7 +63,7 @@ class _AccountPageState extends State<AccountPage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            EditAccountPage()));
+                                            const EditAccountPage()));
                                 if (result != null) {
                                   setState(() {
                                     myAccount = Authentication.myAccount!;
