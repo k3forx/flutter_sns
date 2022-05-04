@@ -27,14 +27,14 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     return Scaffold(
       appBar: WidgetUtils.createAppBar('新規登録'),
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           width: double.infinity,
           child: Column(
             children: [
               const SizedBox(
                 height: 30,
               ),
-              Container(
+              SizedBox(
                 width: 300,
                 child: TextField(
                   controller: userNameController,
@@ -43,7 +43,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
-                child: Container(
+                child: SizedBox(
                   width: 300,
                   child: TextField(
                     controller: emailController,
@@ -51,7 +51,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 width: 300,
                 child: TextField(
                   controller: passController,

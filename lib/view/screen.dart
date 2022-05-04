@@ -13,10 +13,8 @@ class Screen extends StatefulWidget {
 class _ScreenState extends State<Screen> {
   int selectedIndex = 0;
   List<Widget> pageList = [
-    TimeLinePage(),
+    const TimeLinePage(),
     AccountPage(),
-    TimeLinePage(),
-    AccountPage()
   ];
 
   @override
@@ -31,9 +29,11 @@ class _ScreenState extends State<Screen> {
           ],
           currentIndex: selectedIndex,
           onTap: (index) {
-            setState(() {
-              selectedIndex = index;
-            });
+            setState(
+              () {
+                selectedIndex = index;
+              },
+            );
           },
         ),
         floatingActionButton: FloatingActionButton(

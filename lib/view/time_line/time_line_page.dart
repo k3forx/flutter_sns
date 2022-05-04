@@ -37,9 +37,12 @@ class _TimeLinePageState extends State<TimeLinePage> {
             itemCount: snapShot.data!.length,
             itemBuilder: (context, index) {
               final CoffeeBean coffeeBean = snapShot.data![index];
-              return Container(
-                height: 50,
-                child: Center(child: Text('Entry ${coffeeBean.name}')),
+              return GestureDetector(
+                onTap: () => {print(coffeeBean.id)},
+                child: SizedBox(
+                  height: 50,
+                  child: Center(child: Text('Entry ${coffeeBean.name}')),
+                ),
               );
             },
           );
