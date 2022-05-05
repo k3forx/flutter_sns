@@ -3,6 +3,7 @@ import 'package:flutter_sns/model/coffee_bean.dart';
 import 'package:flutter_sns/model/result.dart';
 import 'package:flutter_sns/utils/firestore/posts.dart';
 import 'package:intl/intl.dart';
+import 'package:confirm_dialog/confirm_dialog.dart';
 
 class CoffeeBeanDetailPage extends StatefulWidget {
   final int coffeeBeanId;
@@ -141,12 +142,19 @@ class _CoffeeBeanDetailPage extends State<CoffeeBeanDetailPage> {
                         ),
                         child: const Text("削除する"),
                         onPressed: () async {
-                          final result =
-                              await postFirestore.delete(coffeeBeanId);
-                          if (result.isSuccess()) {
-                            Navigator.pop(context);
-                          } else {
-                            showAlert(context, result);
+                          if (await confirm(
+                            context,
+                            title: const Text(""),
+                            content: const Text("削除しますか？"),
+                            textCancel: const Text("キャンセル"),
+                          )) {
+                            final result =
+                                await postFirestore.delete(coffeeBeanId);
+                            if (result.isSuccess()) {
+                              Navigator.pop(context);
+                            } else {
+                              showAlert(context, result);
+                            }
                           }
                         },
                       ),
