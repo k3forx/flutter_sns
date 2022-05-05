@@ -17,10 +17,12 @@ class _TimeLinePageState extends State<TimeLinePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Coffee Memo',
-            style: TextStyle(
-              color: Colors.black,
-            )),
+        title: const Text(
+          'Coffee Memo',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
         backgroundColor: Theme.of(context).canvasColor,
         elevation: 1,
       ),
@@ -47,7 +49,9 @@ class _TimeLinePageState extends State<TimeLinePage> {
                         coffeeBeanId: coffeeBean.id,
                       ),
                     ),
-                  )
+                  ).then(
+                    (_) => setState(() {}),
+                  ),
                 },
                 child: SizedBox(
                   height: 50,

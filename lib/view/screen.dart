@@ -43,9 +43,13 @@ class _ScreenState extends State<Screen> {
             MaterialPageRoute(
               builder: (context) => const PostPage(),
             ),
+          ).then(
+            (_) => setState(() {
+              selectedIndex = 0;
+            }),
           );
         },
-        child: const Icon(Icons.chat_bubble_outline),
+        child: const Icon(Icons.add_circle),
       ),
     );
   }
