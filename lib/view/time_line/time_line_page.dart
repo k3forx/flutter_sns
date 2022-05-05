@@ -58,9 +58,11 @@ class _TimeLinePageState extends State<TimeLinePage> {
                     title: Text(coffeeBean.name),
                     subtitle: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -82,13 +84,19 @@ class _TimeLinePageState extends State<TimeLinePage> {
                           width: 20,
                         ),
                         Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text("原産国: ${coffeeBean.country}"),
                               ],
                             ),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   "焙煎度: ${DateFormat("yyyy-MM-dd").format(coffeeBean.roastedAt!)}",
