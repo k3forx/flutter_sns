@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sns/model/coffee_bean.dart';
+import 'package:flutter_sns/model/result.dart';
 import 'package:flutter_sns/utils/firestore/posts.dart';
 import 'package:intl/intl.dart';
 
@@ -123,7 +124,7 @@ class _CoffeeBeanDetailPage extends State<CoffeeBeanDetailPage> {
                           if (result.isSuccess()) {
                             Navigator.pop(context);
                           } else {
-                            //TODO: show alert
+                            showAlert(context, result);
                           }
                         },
                         child: const Text('編集する'),
@@ -131,10 +132,48 @@ class _CoffeeBeanDetailPage extends State<CoffeeBeanDetailPage> {
                     ),
                   ],
                 ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.red, // Background color
+                        ),
+                        child: const Text("削除する"),
+                        onPressed: () async {
+                          final result =
+                              await postFirestore.delete(coffeeBeanId);
+                          if (result.isSuccess()) {
+                            Navigator.pop(context);
+                          } else {
+                            showAlert(context, result);
+                          }
+                        },
+                      ),
+                    )
+                  ],
+                )
               ],
             );
           },
         ),
+      ),
+    );
+  }
+
+  void showAlert(BuildContext context, Result res) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: Text(
+          res.getDetailMessage(),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('OK'),
+          ),
+        ],
       ),
     );
   }

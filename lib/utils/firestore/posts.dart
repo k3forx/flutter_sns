@@ -148,4 +148,24 @@ class PostFirestore {
       return newFromDioResponse(e.response!);
     }
   }
+
+  Future<Result> delete(int id) async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
+    PersistCookieJar cookieJar =
+        PersistCookieJar(storage: FileStorage(appDocPath + "/.cookies/"));
+
+    cookieJar.saveFromResponse(_uriHost, cookies);
+    dio.interceptors.add(CookieManager(cookieJar));
+
+    try {
+      final response = await dio.delete(
+        "/v1/coffee-beans/$id",
+        options: Options(contentType: Headers.jsonContentType),
+      );
+      return newFromDioResponse(response);
+    } on DioError catch (e) {
+      return newFromDioResponse(e.response!);
+    }
+  }
 }

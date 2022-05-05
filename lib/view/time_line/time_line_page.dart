@@ -34,9 +34,8 @@ class _TimeLinePageState extends State<TimeLinePage> {
               child: CircularProgressIndicator(),
             );
           }
-          return ListView.separated(
+          return ListView.builder(
             padding: const EdgeInsets.all(8),
-            separatorBuilder: (context, index) => const Divider(),
             itemCount: snapShot.data!.length,
             itemBuilder: (context, index) {
               final CoffeeBean coffeeBean = snapShot.data![index];
@@ -53,10 +52,11 @@ class _TimeLinePageState extends State<TimeLinePage> {
                     (_) => setState(() {}),
                   ),
                 },
-                child: SizedBox(
-                  height: 50,
-                  child: Center(
-                    child: Text('Entry ${coffeeBean.name}'),
+                child: Card(
+                  child: ListTile(
+                    title: Text(coffeeBean.name),
+                    subtitle: Text(
+                        '農園: ${coffeeBean.farmName}, 原産国: ${coffeeBean.country}, 焙煎度: ${coffeeBean.roastDegree}'),
                   ),
                 ),
               );
