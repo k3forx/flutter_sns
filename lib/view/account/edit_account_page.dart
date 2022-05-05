@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_sns/model/account.dart';
 import 'package:flutter_sns/utils/authentication.dart';
-import 'package:flutter_sns/utils/firestore/users.dart';
 import 'package:flutter_sns/utils/function_utils.dart';
 import 'package:flutter_sns/utils/widget_utils.dart';
 import 'package:flutter_sns/view/start_up/login_page.dart';
@@ -38,7 +37,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
     return Scaffold(
       appBar: WidgetUtils.createAppBar('プロフィール編集'),
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           width: double.infinity,
           child: Column(
             children: [
@@ -53,7 +52,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                   }
                 },
               ),
-              Container(
+              SizedBox(
                 width: 300,
                 child: TextField(
                   controller: nameController,
@@ -62,7 +61,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
-                child: Container(
+                child: SizedBox(
                   width: 300,
                   child: TextField(
                     controller: userIdController,
@@ -70,7 +69,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 width: 300,
                 child: TextField(
                   controller: selfIntroductionController,
@@ -81,55 +80,46 @@ class _EditAccountPageState extends State<EditAccountPage> {
                 height: 50,
               ),
               ElevatedButton(
-                  onPressed: () async {
-                    if (nameController.text.isNotEmpty &&
-                        userIdController.text.isNotEmpty &&
-                        selfIntroductionController.text.isNotEmpty) {
-                      Account updateAccount = Account(
-                        id: myAccount.id,
-                        name: nameController.text,
-                        userId: nameController.text,
-                      );
-                      var result =
-                          await UserFirestore.updateUser(updateAccount);
-                      if (result) {
-                        Authentication.myAccount = updateAccount;
-                        Navigator.pop(context, true);
-                      }
-                    }
-                  },
-                  child: const Text('更新')),
+                onPressed: () async {},
+                child: const Text('更新'),
+              ),
               const SizedBox(
                 height: 50,
               ),
               ElevatedButton(
-                  onPressed: () {
-                    Authentication.signOut();
-                    while (Navigator.canPop(context)) {
-                      Navigator.pop(context);
-                    }
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginPage()));
-                  },
-                  child: const Text("ログアウト")),
+                onPressed: () {
+                  Authentication.signOut();
+                  while (Navigator.canPop(context)) {
+                    Navigator.pop(context);
+                  }
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginPage(),
+                    ),
+                  );
+                },
+                child: const Text("ログアウト"),
+              ),
               const SizedBox(
                 height: 50,
               ),
               ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Colors.red),
-                  onPressed: () {
-                    Authentication.deleteAuth();
-                    while (Navigator.canPop(context)) {
-                      Navigator.pop(context);
-                    }
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginPage()));
-                  },
-                  child: const Text("アカウント削除")),
+                style: ElevatedButton.styleFrom(primary: Colors.red),
+                onPressed: () {
+                  Authentication.deleteAuth();
+                  while (Navigator.canPop(context)) {
+                    Navigator.pop(context);
+                  }
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginPage(),
+                    ),
+                  );
+                },
+                child: const Text("アカウント削除"),
+              ),
             ],
           ),
         ),

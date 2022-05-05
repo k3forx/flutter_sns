@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_sns/model/account.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:path_provider/path_provider.dart';
 
@@ -38,19 +39,21 @@ class Authentication {
       cookieJar.saveFromResponse(_uriHost, cookies);
       dio.interceptors.add(CookieManager(cookieJar));
 
-      final response = await dio.post('/v1/auth/signup',
-          data: {
-            'username': userName,
-            'email': email,
-            'password': password,
-          },
-          options: Options(
-            contentType: Headers.jsonContentType,
-          ));
+      final response = await dio.post(
+        '/v1/auth/signup',
+        data: {
+          'username': userName,
+          'email': email,
+          'password': password,
+        },
+        options: Options(
+          contentType: Headers.jsonContentType,
+        ),
+      );
 
       return response.data["status"] == "success";
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return false;
     }
   }
@@ -80,12 +83,11 @@ class Authentication {
       cookies = [...cookies, Cookie('session', response.data['session'])];
       cookieJar.saveFromResponse(_uriHost, cookies);
 
-      List<Cookie> cookieList =
-          await cookieJar.loadForRequest(_uriHost); // 格納されたクッキーを確認しているだけの処理
+      List<Cookie> cookieList = await cookieJar.loadForRequest(_uriHost);
 
       return cookieList.isNotEmpty;
     } on Exception catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return false;
     }
   }

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_sns/model/coffee_bean.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -41,10 +42,9 @@ class PostFirestore {
         },
         options: Options(contentType: Headers.jsonContentType),
       );
-      print(response);
-      return true;
+      return response.data["status"] == "success";
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return false;
     }
   }
@@ -71,7 +71,7 @@ class PostFirestore {
           .toList();
       return coffeeBeans;
     } on Exception catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return <CoffeeBean>[];
     }
   }
@@ -86,9 +86,13 @@ class PostFirestore {
     dio.interceptors.add(CookieManager(cookieJar));
 
     try {
-      final response = await dio.get('/v1/coffee-beans/$id',
-          options: Options(contentType: Headers.jsonContentType));
-      print(response.data["roastedAt"]);
+      final response = await dio.get(
+        '/v1/coffee-beans/$id',
+        options: Options(
+          contentType: Headers.jsonContentType,
+        ),
+      );
+
       return CoffeeBean(
         id: response.data["id"],
         name: response.data["name"],
@@ -98,7 +102,7 @@ class PostFirestore {
         roastedAt: DateTime.parse(response.data["roastedAt"]),
       );
     } on Exception catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return CoffeeBean();
     }
   }
@@ -126,11 +130,9 @@ class PostFirestore {
           contentType: Headers.jsonContentType,
         ),
       );
-      print(response);
-      return true;
+      return response.data["status"] == "success";
     } on Exception catch (e) {
-      print("exception");
-      print(e);
+      debugPrint(e.toString());
       return false;
     }
   }

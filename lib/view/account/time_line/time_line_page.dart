@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class TimeLinePage extends StatefulWidget {
+  const TimeLinePage({Key? key}) : super(key: key);
+
   @override
   _TimeLinePageState createState() => _TimeLinePageState();
 }
@@ -8,8 +10,8 @@ class TimeLinePage extends StatefulWidget {
 class _TimeLinePageState extends State<TimeLinePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: const Center(child: const Text('タイムライン')),
+    return const Scaffold(
+      body: Center(child: Text('タイムライン')),
     );
   }
 }

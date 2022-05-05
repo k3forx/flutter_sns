@@ -14,7 +14,7 @@ class _ScreenState extends State<Screen> {
   int selectedIndex = 0;
   List<Widget> pageList = [
     const TimeLinePage(),
-    AccountPage(),
+    const AccountPage(),
   ];
 
   @override
