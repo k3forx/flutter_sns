@@ -120,8 +120,10 @@ class _CoffeeBeanDetailPage extends State<CoffeeBeanDetailPage> {
                           coffeeBean.name = nameController.text;
                           coffeeBean.farmName = farmNameController.text;
                           var result = await postFirestore.update(coffeeBean);
-                          if (result) {
+                          if (result.isSuccess()) {
                             Navigator.pop(context);
+                          } else {
+                            //TODO: show alert
                           }
                         },
                         child: const Text('編集する'),

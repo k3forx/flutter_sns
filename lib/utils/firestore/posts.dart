@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_sns/model/coffee_bean.dart';
+import 'package:flutter_sns/model/result.dart';
 import 'package:path_provider/path_provider.dart';
 
 final Uri _uriHost = Uri.parse('http://localhost:8000');
@@ -51,6 +52,7 @@ class PostFirestore {
   }
 
   Future<List<CoffeeBean>> getAll() async {
+    debugPrint("getAll is called");
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String appDocPath = appDocDir.path;
     PersistCookieJar cookieJar =
@@ -81,7 +83,7 @@ class PostFirestore {
       debugPrint(response.statusMessage);
       debugPrint(response.toString());
       return coffeeBeans;
-    } on Exception catch (e) {
+    } on DioError catch (e) {
       debugPrint(e.toString());
       return <CoffeeBean>[];
     }
@@ -118,7 +120,7 @@ class PostFirestore {
     }
   }
 
-  Future<dynamic> update(CoffeeBean coffeeBean) async {
+  Future<Result> update(CoffeeBean coffeeBean) async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String appDocPath = appDocDir.path;
     PersistCookieJar cookieJar =
@@ -141,10 +143,9 @@ class PostFirestore {
           contentType: Headers.jsonContentType,
         ),
       );
-      return response.data["status"] == "success";
-    } on Exception catch (e) {
-      debugPrint(e.toString());
-      return false;
+      return newFromDioResponse(response);
+    } on DioError catch (e) {
+      return newFromDioResponse(e.response!);
     }
   }
 }

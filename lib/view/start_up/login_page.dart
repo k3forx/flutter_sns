@@ -16,6 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
   Authentication authentication = Authentication();
+  bool isObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +50,22 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 width: 300,
                 child: TextField(
+                  obscureText: isObscure,
                   controller: passController,
-                  decoration: const InputDecoration(hintText: "パスワード"),
+                  decoration: InputDecoration(
+                    hintText: "パスワード",
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                          isObscure ? Icons.visibility_off : Icons.visibility),
+                      onPressed: () {
+                        setState(
+                          () {
+                            isObscure = !isObscure;
+                          },
+                        );
+                      },
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(

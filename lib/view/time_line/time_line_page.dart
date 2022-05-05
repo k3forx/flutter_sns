@@ -51,7 +51,9 @@ class _TimeLinePageState extends State<TimeLinePage> {
                 },
                 child: SizedBox(
                   height: 50,
-                  child: Center(child: Text('Entry ${coffeeBean.name}')),
+                  child: Center(
+                    child: Text('Entry ${coffeeBean.name}'),
+                  ),
                 ),
               );
             },

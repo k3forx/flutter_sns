@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sns/model/account.dart';
-import 'package:flutter_sns/utils/authentication.dart';
 import 'package:flutter_sns/view/account/edit_account_page.dart';
 
 class AccountPage extends StatefulWidget {
@@ -11,8 +9,6 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
-  Account myAccount = Authentication.myAccount!;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,16 +34,16 @@ class _AccountPageState extends State<AccountPage> {
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
+                                children: const [
                                   Text(
-                                    myAccount.name,
-                                    style: const TextStyle(
+                                    "name",
+                                    style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Text(
-                                    '@${myAccount.userId}',
-                                    style: const TextStyle(color: Colors.grey),
+                                    "id",
+                                    style: TextStyle(color: Colors.grey),
                                   )
                                 ],
                               )
@@ -63,9 +59,7 @@ class _AccountPageState extends State<AccountPage> {
                               );
                               if (result != null) {
                                 setState(
-                                  () {
-                                    myAccount = Authentication.myAccount!;
-                                  },
+                                  () {},
                                 );
                               }
                             },

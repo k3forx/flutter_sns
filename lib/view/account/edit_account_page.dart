@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_sns/model/account.dart';
 import 'package:flutter_sns/utils/authentication.dart';
 import 'package:flutter_sns/utils/function_utils.dart';
 import 'package:flutter_sns/utils/widget_utils.dart';
@@ -16,8 +15,6 @@ class EditAccountPage extends StatefulWidget {
 }
 
 class _EditAccountPageState extends State<EditAccountPage> {
-  Account myAccount = Authentication.myAccount!;
-
   TextEditingController nameController = TextEditingController();
   TextEditingController userIdController = TextEditingController();
   TextEditingController selfIntroductionController = TextEditingController();
@@ -28,8 +25,6 @@ class _EditAccountPageState extends State<EditAccountPage> {
   @override
   void initState() {
     super.initState();
-    nameController = TextEditingController(text: myAccount.name);
-    userIdController = TextEditingController(text: myAccount.userId);
   }
 
   @override
