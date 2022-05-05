@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
@@ -40,7 +39,9 @@ class PostFirestore {
           'roastDegree': roastDegree,
           'roastedAt': roastedAt,
         },
-        options: Options(contentType: Headers.jsonContentType),
+        options: Options(
+          contentType: Headers.jsonContentType,
+        ),
       );
       return response.data["status"] == "success";
     } catch (e) {
@@ -59,16 +60,26 @@ class PostFirestore {
     dio.interceptors.add(CookieManager(cookieJar));
 
     try {
-      final response = await dio.get('/v1/coffee-beans',
-          options: Options(contentType: Headers.jsonContentType));
+      final response = await dio.get(
+        '/v1/coffee-beans',
+        options: Options(
+          contentType: Headers.jsonContentType,
+        ),
+      );
       List<CoffeeBean> coffeeBeans = (response.data["coffeeBeans"] as List)
           .map(
             (e) => CoffeeBean(
               id: e["id"],
               name: e["name"],
+              farmName: e["farmName"],
+              country: e["country"],
+              roastDegree: e["roastDegree"],
+              roastedAt: DateTime.parse(e["roastedAt"]),
             ),
           )
           .toList();
+      debugPrint(response.statusMessage);
+      debugPrint(response.toString());
       return coffeeBeans;
     } on Exception catch (e) {
       debugPrint(e.toString());

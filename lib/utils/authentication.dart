@@ -1,12 +1,11 @@
 import 'dart:io';
-
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_sns/model/account.dart';
 import 'package:flutter/foundation.dart';
-
+import 'package:flutter_sns/model/result.dart';
 import 'package:path_provider/path_provider.dart';
 
 final Uri _uriHost = Uri.parse('http://localhost:8000');
@@ -58,7 +57,7 @@ class Authentication {
     }
   }
 
-  Future<dynamic> emailSignIn(
+  Future<Result> emailSignIn(
       {required String email, required String password}) async {
     try {
       Directory appDocDir = await getApplicationDocumentsDirectory();
@@ -83,12 +82,9 @@ class Authentication {
       cookies = [...cookies, Cookie('session', response.data['session'])];
       cookieJar.saveFromResponse(_uriHost, cookies);
 
-      List<Cookie> cookieList = await cookieJar.loadForRequest(_uriHost);
-
-      return cookieList.isNotEmpty;
-    } on Exception catch (e) {
-      debugPrint(e.toString());
-      return false;
+      return newFromDioResponse(response);
+    } on DioError catch (e) {
+      return newFromDioResponse(e.response!);
     }
   }
 
