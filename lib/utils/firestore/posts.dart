@@ -52,7 +52,6 @@ class PostFirestore {
   }
 
   Future<List<CoffeeBean>> getAll() async {
-    debugPrint("getAll is called");
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String appDocPath = appDocDir.path;
     PersistCookieJar cookieJar =
@@ -80,11 +79,9 @@ class PostFirestore {
             ),
           )
           .toList();
-      debugPrint(response.statusMessage);
-      debugPrint(response.toString());
       return coffeeBeans;
     } on DioError catch (e) {
-      debugPrint(e.toString());
+      debugPrint(newFromDioResponse(e.response!).getDetailMessage());
       return <CoffeeBean>[];
     }
   }

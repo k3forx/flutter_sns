@@ -18,6 +18,7 @@ class CoffeeBeanDetailPage extends StatefulWidget {
 
 class _CoffeeBeanDetailPage extends State<CoffeeBeanDetailPage> {
   PostFirestore postFirestore = PostFirestore();
+  String selectedRoastDegree = "";
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +53,6 @@ class _CoffeeBeanDetailPage extends State<CoffeeBeanDetailPage> {
                 TextEditingController(text: coffeeBean.farmName);
             TextEditingController countryController =
                 TextEditingController(text: coffeeBean.country);
-            TextEditingController roastDegreeController =
-                TextEditingController(text: coffeeBean.roastDegree);
             TextEditingController roastedAtController = TextEditingController(
                 text: DateFormat("yyyy-MM-dd").format(coffeeBean.roastedAt!));
 
@@ -100,11 +99,65 @@ class _CoffeeBeanDetailPage extends State<CoffeeBeanDetailPage> {
                           TextField(
                             controller: countryController,
                           ),
-                          TextField(
-                            controller: roastDegreeController,
+                          DropdownButtonFormField<String>(
+                            items: const [
+                              DropdownMenuItem(
+                                child: Text('ライトロースト'),
+                                value: 'light',
+                              ),
+                              DropdownMenuItem(
+                                child: Text('シナモンロースト'),
+                                value: 'chinamon',
+                              ),
+                              DropdownMenuItem(
+                                child: Text('ミディアムロースト'),
+                                value: 'medium',
+                              ),
+                              DropdownMenuItem(
+                                child: Text('ハイロースト'),
+                                value: 'high',
+                              ),
+                              DropdownMenuItem(
+                                child: Text('シティロースト'),
+                                value: 'city',
+                              ),
+                              DropdownMenuItem(
+                                child: Text('フルシティロースト'),
+                                value: 'fullcity',
+                              ),
+                              DropdownMenuItem(
+                                child: Text('フレンチロースト'),
+                                value: 'french',
+                              ),
+                              DropdownMenuItem(
+                                child: Text('イタリアンロースト'),
+                                value: 'italian',
+                              ),
+                            ],
+                            onSaved: (String? value) {
+                              coffeeBean.roastDegree = value!;
+                            },
+                            onChanged: (String? value) {
+                              selectedRoastDegree = value!;
+                            },
+                            value: coffeeBean.roastDegree,
                           ),
                           TextField(
                             controller: roastedAtController,
+                            onTap: () async {
+                              final newSelectedDate = await showDatePicker(
+                                context: context,
+                                initialDate: coffeeBean.roastedAt!,
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2040),
+                                cancelText: "戻る",
+                              );
+                              if (newSelectedDate != null) {
+                                roastedAtController.text =
+                                    DateFormat("yyyy-MM-dd")
+                                        .format(newSelectedDate);
+                              }
+                            },
                           )
                         ],
                       ),
@@ -121,6 +174,10 @@ class _CoffeeBeanDetailPage extends State<CoffeeBeanDetailPage> {
                         onPressed: () async {
                           coffeeBean.name = nameController.text;
                           coffeeBean.farmName = farmNameController.text;
+                          coffeeBean.country = countryController.text;
+                          if (selectedRoastDegree != "") {
+                            coffeeBean.roastDegree = selectedRoastDegree;
+                          }
                           var result = await postFirestore.update(coffeeBean);
                           if (result.isSuccess()) {
                             Navigator.pop(context);
