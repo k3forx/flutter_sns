@@ -80,8 +80,10 @@ class _TimeLinePageState extends State<TimeLinePage> {
                             )
                           ],
                         ),
-                        const SizedBox(
-                          width: 20,
+                        const Expanded(
+                          child: SizedBox(
+                            width: 20,
+                          ),
                         ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sns/view/account/account_page.dart';
-import 'package:flutter_sns/view/time_line/post_page.dart';
+import 'package:flutter_sns/view/recipe/recipe_page.dart';
+import 'package:flutter_sns/view/time_line/select_action_page.dart';
 import 'package:flutter_sns/view/time_line/time_line_page.dart';
 
 class Screen extends StatefulWidget {
@@ -14,6 +15,7 @@ class _ScreenState extends State<Screen> {
   int selectedIndex = 0;
   List<Widget> pageList = [
     const TimeLinePage(),
+    const RecipePage(),
     const AccountPage(),
   ];
 
@@ -24,7 +26,7 @@ class _ScreenState extends State<Screen> {
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.coffee), label: ''),
-          // BottomNavigationBarItem(icon: Icon(Icons.store_sharp), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.note_alt_sharp), label: ''),
           BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: '')
         ],
         currentIndex: selectedIndex,
@@ -41,12 +43,14 @@ class _ScreenState extends State<Screen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const PostPage(),
+              builder: (context) => const SelectActionPage(),
             ),
           ).then(
-            (_) => setState(() {
-              selectedIndex = 0;
-            }),
+            (_) => setState(
+              () {
+                selectedIndex = 0;
+              },
+            ),
           );
         },
         child: const Icon(Icons.add_circle),
