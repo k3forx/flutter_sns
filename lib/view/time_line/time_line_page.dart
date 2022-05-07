@@ -101,7 +101,7 @@ class _TimeLinePageState extends State<TimeLinePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "焙煎度: ${DateFormat("yyyy-MM-dd").format(coffeeBean.roastedAt!)}",
+                                  "焙煎日: ${DateFormat("yyyy-MM-dd").format(coffeeBean.roastedAt!)}",
                                 ),
                               ],
                             ),

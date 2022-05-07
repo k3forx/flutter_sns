@@ -1,7 +1,8 @@
 import "package:firebase_core/firebase_core.dart";
 import 'package:flutter/material.dart';
-import 'firebase_options.dart';
+import 'package:flutter_sns/view/recipe/post_recipe_page.dart';
 import 'package:flutter_sns/view/start_up/login_page.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.brown,
       ),
       home: const LoginPage(),
+      // home: const PostRecipePage(),
     );
   }
 }
