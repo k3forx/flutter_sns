@@ -555,8 +555,8 @@ class _PostRecipePageState extends State<PostRecipePage> {
                         ],
                       ),
                       Row(
-                        children: [
-                          const Text("1. 20mlで20秒むらす"),
+                        children: const [
+                          Text("1. 20mlで20秒むらす"),
                         ],
                       ),
                     ],
