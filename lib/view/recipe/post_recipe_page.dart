@@ -25,6 +25,9 @@ class _PostRecipePageState extends State<PostRecipePage> {
   double acidityRating = 0;
   TextEditingController memoController = TextEditingController();
 
+  final List<int> ticks = [1, 2, 3, 4, 5];
+  List<String> features = ["甘味", "酸味", "CC", "DD", "EE"];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,12 +63,15 @@ class _PostRecipePageState extends State<PostRecipePage> {
                           const Text(
                             "コーヒー豆",
                             style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 18,
                             ),
                           ),
                           Card(
                             child: ListTile(
-                              title: Text(coffeeBean.name),
+                              title: Text(
+                                coffeeBean.name,
+                                style: const TextStyle(fontSize: 15),
+                              ),
                               subtitle: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +87,11 @@ class _PostRecipePageState extends State<PostRecipePage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text("農園: ${coffeeBean.farmName}"),
+                                          Text(
+                                            "農園: ${coffeeBean.farmName}",
+                                            style:
+                                                const TextStyle(fontSize: 13),
+                                          ),
                                         ],
                                       ),
                                       Row(
@@ -91,7 +101,10 @@ class _PostRecipePageState extends State<PostRecipePage> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                              "焙煎度: ${coffeeBean.roastDegree}"),
+                                            "焙煎度: ${coffeeBean.roastDegree}",
+                                            style:
+                                                const TextStyle(fontSize: 13),
+                                          ),
                                         ],
                                       )
                                     ],
@@ -112,7 +125,11 @@ class _PostRecipePageState extends State<PostRecipePage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text("原産国: ${coffeeBean.country}"),
+                                          Text(
+                                            "原産国: ${coffeeBean.country}",
+                                            style:
+                                                const TextStyle(fontSize: 13),
+                                          ),
                                         ],
                                       ),
                                       Row(
@@ -123,6 +140,8 @@ class _PostRecipePageState extends State<PostRecipePage> {
                                         children: [
                                           Text(
                                             "焙煎日: ${DateFormat("yyyy-MM-dd").format(coffeeBean.roastedAt!)}",
+                                            style:
+                                                const TextStyle(fontSize: 13),
                                           ),
                                         ],
                                       ),
@@ -152,7 +171,7 @@ class _PostRecipePageState extends State<PostRecipePage> {
                               Text(
                                 "テイスティング",
                                 style: TextStyle(
-                                  fontSize: 15,
+                                  fontSize: 18,
                                 ),
                               ),
                             ],
@@ -162,59 +181,104 @@ class _PostRecipePageState extends State<PostRecipePage> {
                           ),
                           Row(
                             children: [
-                              const Text("甘味"),
                               Expanded(
-                                child: RatingBar.builder(
-                                  initialRating: 0,
-                                  minRating: 0,
-                                  direction: Axis.horizontal,
-                                  allowHalfRating: true,
-                                  itemCount: 5,
-                                  itemPadding: const EdgeInsets.symmetric(
-                                      horizontal: 2.0),
-                                  itemBuilder: (context, _) => const Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                  ),
-                                  itemSize: 20,
-                                  onRatingUpdate: (rating) {
-                                    sweetnessRating = rating;
-                                    setState(() => {});
-                                  },
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Text("甘味"),
+                                        RatingBar.builder(
+                                          initialRating: 0,
+                                          minRating: 0,
+                                          direction: Axis.horizontal,
+                                          allowHalfRating: true,
+                                          itemCount: 5,
+                                          itemPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 2.0),
+                                          itemBuilder: (context, _) =>
+                                              const Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          ),
+                                          itemSize: 20,
+                                          onRatingUpdate: (rating) {
+                                            sweetnessRating = rating;
+                                            setState(() => {});
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Text("酸味"),
+                                        RatingBar.builder(
+                                          initialRating: 0,
+                                          minRating: 0,
+                                          direction: Axis.horizontal,
+                                          allowHalfRating: true,
+                                          itemCount: 5,
+                                          itemPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 2.0),
+                                          itemBuilder: (context, _) =>
+                                              const Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          ),
+                                          itemSize: 20,
+                                          onRatingUpdate: (rating) {
+                                            acidityRating = rating;
+                                            setState(() => {});
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Text("$sweetnessRating"),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              const Text("酸味"),
                               Expanded(
-                                child: RatingBar.builder(
-                                  initialRating: 0,
-                                  minRating: 0,
-                                  direction: Axis.horizontal,
-                                  allowHalfRating: true,
-                                  itemCount: 5,
-                                  itemPadding: const EdgeInsets.symmetric(
-                                      horizontal: 2.0),
-                                  itemBuilder: (context, _) => const Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                  ),
-                                  itemSize: 20,
-                                  onRatingUpdate: (rating) {
-                                    acidityRating = rating;
-                                    setState(() => {});
-                                  },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.5,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.2,
+                                      child: RadarChart(
+                                        featuresTextStyle: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                        ),
+                                        ticksTextStyle: const TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 0,
+                                        ),
+                                        outlineColor: Colors.grey,
+                                        ticks: ticks,
+                                        features: features,
+                                        data: [
+                                          [
+                                            sweetnessRating,
+                                            acidityRating,
+                                            1,
+                                            2,
+                                            3
+                                          ],
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Text("$acidityRating"),
+                              )
                             ],
                           ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
