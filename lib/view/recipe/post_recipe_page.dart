@@ -32,6 +32,10 @@ class _PostRecipePageState extends State<PostRecipePage> {
 
   TextEditingController coffeeBeanWeightController = TextEditingController();
   TextEditingController memoController = TextEditingController();
+  TextEditingController grindController = TextEditingController();
+  TextEditingController waterWeightController = TextEditingController();
+  TextEditingController waterTemperatureController = TextEditingController();
+  TextEditingController opsMemoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -398,7 +402,7 @@ class _PostRecipePageState extends State<PostRecipePage> {
                       Row(
                         children: [
                           SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.2,
+                            width: MediaQuery.of(context).size.width * 0.23,
                             child: Column(
                               children: [
                                 const SizedBox(
@@ -406,16 +410,17 @@ class _PostRecipePageState extends State<PostRecipePage> {
                                   height: 20,
                                 ),
                                 const SizedBox(
-                                  height: 6,
+                                  height: 10,
                                 ),
                                 SizedBox(
                                   height: 20,
                                   child: TextField(
                                     controller: coffeeBeanWeightController,
                                     keyboardType: TextInputType.number,
-                                    style: const TextStyle(fontSize: 15),
-                                    textAlign: TextAlign.right,
+                                    style: const TextStyle(fontSize: 14),
+                                    textAlign: TextAlign.center,
                                     decoration: const InputDecoration(
+                                      hintText: "0",
                                       border: InputBorder.none,
                                     ),
                                   ),
@@ -424,7 +429,7 @@ class _PostRecipePageState extends State<PostRecipePage> {
                             ),
                           ),
                           SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.2,
+                            width: MediaQuery.of(context).size.width * 0.23,
                             child: Column(
                               children: [
                                 const SizedBox(
@@ -432,41 +437,126 @@ class _PostRecipePageState extends State<PostRecipePage> {
                                   height: 20,
                                 ),
                                 const SizedBox(
-                                  height: 6,
+                                  height: 10,
                                 ),
                                 SizedBox(
                                   height: 20,
                                   child: TextField(
-                                    controller: coffeeBeanWeightController,
-                                    keyboardType: TextInputType.number,
-                                    style: const TextStyle(fontSize: 15),
-                                    textAlign: TextAlign.right,
+                                    controller: grindController,
+                                    keyboardType: TextInputType.text,
+                                    style: const TextStyle(fontSize: 14),
+                                    textAlign: TextAlign.center,
+                                    decoration: const InputDecoration(
+                                      hintText: "-",
+                                      border: InputBorder.none,
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
                           SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.2,
+                            width: MediaQuery.of(context).size.width * 0.23,
                             child: Column(
                               children: [
-                                const Text("水量"),
+                                const SizedBox(
+                                  child: Text("水量 (g)"),
+                                  height: 20,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                  child: TextField(
+                                    controller: waterWeightController,
+                                    keyboardType: TextInputType.number,
+                                    style: const TextStyle(fontSize: 14),
+                                    textAlign: TextAlign.center,
+                                    decoration: const InputDecoration(
+                                      hintText: "0",
+                                      border: InputBorder.none,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
                           SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.2,
+                            width: MediaQuery.of(context).size.width * 0.23,
                             child: Column(
                               children: [
-                                const Text("水温"),
+                                const SizedBox(
+                                  child: Text("水温 (°C)"),
+                                  height: 20,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                  child: TextField(
+                                    controller: waterTemperatureController,
+                                    keyboardType: TextInputType.number,
+                                    style: const TextStyle(fontSize: 14),
+                                    textAlign: TextAlign.center,
+                                    decoration: const InputDecoration(
+                                      hintText: "0",
+                                      border: InputBorder.none,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
                         ],
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: const [
-                          Text("1. 20mlで20秒むらす"),
+                          Text(
+                            "手順",
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text("1. "),
+                          SizedBox(
+                            height: 20,
+                            width: MediaQuery.of(context).size.width * 0.72,
+                            child: TextField(
+                              controller: opsMemoController,
+                              keyboardType: TextInputType.text,
+                              style: const TextStyle(fontSize: 14),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.add),
+                              color: Colors.green,
+                              padding: const EdgeInsets.all(1),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 50,
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.clear),
+                              color: Colors.red,
+                              padding: const EdgeInsets.all(1),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text("1. 20mlで20秒むらす"),
                         ],
                       ),
                     ],
@@ -481,7 +571,8 @@ class _PostRecipePageState extends State<PostRecipePage> {
                       const Text(
                         "メモ",
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       TextField(
