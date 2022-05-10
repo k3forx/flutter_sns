@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_radar_chart/flutter_radar_chart.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_sns/model/brewing_recipe_form.dart';
 import 'package:flutter_sns/model/coffee_bean.dart';
 import 'package:intl/intl.dart';
 
@@ -36,6 +37,39 @@ class _PostRecipePageState extends State<PostRecipePage> {
   TextEditingController waterWeightController = TextEditingController();
   TextEditingController waterTemperatureController = TextEditingController();
   TextEditingController opsMemoController = TextEditingController();
+
+  List<BrewingRecipeForm> brewingRecipeFormList = [];
+
+  @override
+  void dispose() {
+    for (var element in brewingRecipeFormList) {
+      element.dispose();
+    }
+
+    super.dispose();
+  }
+
+  void add() {
+    setState(() {
+      brewingRecipeFormList.add(BrewingRecipeForm.create(""));
+    });
+  }
+
+  void remove(int id) {
+    final removedItem =
+        brewingRecipeFormList.firstWhere((element) => element.id == id);
+    setState(
+      () {
+        brewingRecipeFormList.removeWhere((element) => element.id == id);
+      },
+    );
+
+    // itemのcontrollerをすぐdisposeすると怒られるので
+    // 少し時間をおいてからdipose()
+    Future.delayed(const Duration(seconds: 1)).then((value) {
+      removedItem.dispose();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -382,10 +416,10 @@ class _PostRecipePageState extends State<PostRecipePage> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.fromLTRB(15.0, 0, 15.0, 15.0),
+                  padding: const EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
                   child: Column(
                     // mainAxisAlignment: MainAxisAlignment.start,
-                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -511,96 +545,129 @@ class _PostRecipePageState extends State<PostRecipePage> {
                           ),
                         ],
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: const [
-                          Text(
-                            "手順",
-                            style: TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const Text("1. "),
-                          SizedBox(
-                            height: 20,
-                            width: MediaQuery.of(context).size.width * 0.72,
-                            child: TextField(
-                              controller: opsMemoController,
-                              keyboardType: TextInputType.text,
-                              style: const TextStyle(fontSize: 14),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.add),
-                              color: Colors.green,
-                              padding: const EdgeInsets.all(1),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 50,
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.clear),
-                              color: Colors.red,
-                              padding: const EdgeInsets.all(1),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: const [
-                          Text("1. 20mlで20秒むらす"),
-                        ],
-                      ),
                     ],
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.fromLTRB(15.0, 0, 15.0, 15.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  padding: const EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
+                  child: Row(
                     children: [
-                      const Text(
-                        "メモ",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                      SizedBox(
+                        height: 280,
+                        width: 310,
+                        child: ListView(
+                          physics: const NeverScrollableScrollPhysics(),
+                          children: [
+                            const Text(
+                              "手順",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                            ...brewingRecipeFormList
+                                .map((item) => textFieldItem(item)),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            SizedBox(
+                              height: 25,
+                              width: 10,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  add();
+                                },
+                                child: const Text("追加"),
+                                style: ElevatedButton.styleFrom(),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            const Text(
+                              "メモ",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 40,
+                              child: TextField(
+                                controller: memoController,
+                                decoration: const InputDecoration(
+                                  hintText: "xx文字まで入力できます",
+                                ),
+                                maxLines: null,
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Center(
+                              child: SizedBox(
+                                width: 100,
+                                height: 30,
+                                child: ElevatedButton(
+                                  onPressed: () {},
+                                  child: const Text("登録"),
+                                ),
+                              ),
+                            )
+                          ],
                         ),
-                      ),
-                      TextField(
-                        controller: memoController,
-                        decoration:
-                            const InputDecoration(hintText: "xx文字まで入力できます"),
-                        maxLines: null,
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: const Text("登録"),
-                    ),
-                  ],
-                )
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget textFieldItem(
+    BrewingRecipeForm brewingRecipeForm,
+  ) {
+    return Row(
+      children: [
+        SizedBox(
+          height: 25,
+          width: 250,
+          child: TextField(
+            controller: brewingRecipeForm.controller,
+            onChanged: (text) {
+              setState(
+                () {
+                  brewingRecipeFormList = brewingRecipeFormList
+                      .map(
+                        (e) => e.id == brewingRecipeForm.id
+                            ? brewingRecipeForm.change(text)
+                            : e,
+                      )
+                      .toList();
+                },
+              );
+            },
+            style: const TextStyle(fontSize: 14),
+          ),
+        ),
+        SizedBox(
+          height: 25,
+          child: IconButton(
+            iconSize: 25,
+            icon: const Icon(
+              Icons.close,
+            ),
+            onPressed: () {
+              remove(brewingRecipeForm.id);
+            },
+          ),
+        )
+      ],
     );
   }
 }
