@@ -570,19 +570,21 @@ class _PostRecipePageState extends State<PostRecipePage> {
                             const SizedBox(
                               height: 15,
                             ),
-                            SizedBox(
-                              height: 25,
-                              width: 10,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  add();
-                                },
-                                child: const Text("追加"),
-                                style: ElevatedButton.styleFrom(),
-                              ),
-                            ),
+                            brewingRecipeFormList.length < 5
+                                ? SizedBox(
+                                    height: 25,
+                                    width: 10,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        add();
+                                      },
+                                      child: const Text("追加"),
+                                      style: ElevatedButton.styleFrom(),
+                                    ),
+                                  )
+                                : const SizedBox(height: 0),
                             const SizedBox(
-                              height: 15,
+                              height: 10,
                             ),
                             const Text(
                               "メモ",
@@ -592,7 +594,7 @@ class _PostRecipePageState extends State<PostRecipePage> {
                               ),
                             ),
                             SizedBox(
-                              height: 40,
+                              height: 35,
                               child: TextField(
                                 controller: memoController,
                                 decoration: const InputDecoration(
@@ -603,12 +605,12 @@ class _PostRecipePageState extends State<PostRecipePage> {
                               ),
                             ),
                             const SizedBox(
-                              height: 15,
+                              height: 10,
                             ),
                             Center(
                               child: SizedBox(
                                 width: 100,
-                                height: 30,
+                                height: 25,
                                 child: ElevatedButton(
                                   onPressed: () {},
                                   child: const Text("登録"),
