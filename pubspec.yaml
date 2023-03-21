@@ -40,7 +40,7 @@ dependencies:
   firebase_auth: ^3.3.11
   firebase_storage: ^10.2.9
   cloud_firestore: ^3.1.10
-  dio: ^4.0.6
+  dio: ^5.0.3
   cookie_jar: ^3.0.1
   dio_cookie_manager: ^2.0.0
   path_provider: ^2.0.9
